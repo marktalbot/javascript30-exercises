@@ -24,11 +24,11 @@ const playClip = keyCode => {
 	if (!loadedClips[keyCode]) {
 		return;
 	};
+	addHighlight(event.keyCode);
 	loadedClips[keyCode].currentTime = 0;
 	loadedClips[keyCode].play();
 };
 
 document.addEventListener('keydown', event => {
-	addHighlight(event.keyCode);
 	playClip(event.keyCode);
 });
