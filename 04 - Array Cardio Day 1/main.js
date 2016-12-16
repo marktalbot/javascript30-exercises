@@ -23,7 +23,7 @@ const filtered = inventors.filter(inventor => {
 	return inventor.year > 1499 && inventor.year < 1599;
 });
 
-console.log('Filtered -> ', filtered);
+console.table(filtered);
 
 // Array.prototype.map()
 // 2. Give us an array of the inventory first and last names
@@ -34,7 +34,7 @@ const names = inventors.map(inventor => {
 	});
 });
 
-console.log('Names -> ', names);
+console.table(names);
 
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest
@@ -42,7 +42,7 @@ const sorted = inventors.sort((first, second) => {
 	return first.year - second.year;
 });
 
-console.log('Sorted -> ', sorted);
+console.table(sorted);
 
 // Array.prototype.reduce()
 // 4. How many years did all the inventors live?
