@@ -15,7 +15,7 @@ const inventors = [
 
 const flavours = ['Chocolate Chip', 'Kulfi', 'Caramel Praline', 'Chocolate', 'Burnt Caramel', 'Pistachio', 'Rose', 'Sweet Coconut', 'Lemon Cookie', 'Toffeeness', 'Toasted Almond', 'Black Raspberry Crunch', 'Chocolate Brownies', 'Pistachio Almond', 'Strawberry', 'Lavender Honey', 'Lychee', 'Peach', 'Black Walnut', 'Birthday Cake', 'Mexican Chocolate', 'Mocha Almond Fudge', 'Raspberry'];
 
-const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
+const people = ['Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
 
 // Array.prototype.filter()
 // 1. Filter the list of inventors for those who were born in the 1500's
@@ -57,14 +57,37 @@ const totalYears = inventors.reduce((total, next) => {
 console.log('Total Years -> ', totalYears);
 
 // 5. Sort the inventors by years lived
+const yearsLived = inventors.sort((first, second) => {
+	return (first.passed - first.year) - (second.passed - second.year);
+});
+
+console.table(yearsLived);
 
 // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
 // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+const streets = ["Boulevards of Paris","City walls of Paris","Thiers wall","Wall of Charles V","Wall of Philip II Augustus","City gates of Paris","Boulevards of the Marshals","Boulevard Auguste-Blanqui","Boulevard Barbès","Boulevard Beaumarchais","Boulevard de l'Amiral-Bruix","Boulevard de Strasbourg","Boulevard des Capucines","Boulevard de la Chapelle","Boulevard de Clichy","Boulevard du Crime","Boulevard Haussmann","Boulevard de l'Hôpital","Boulevard des Italiens","Boulevard de la Madeleine","Boulevard de Magenta","Boulevard Montmartre","Boulevard du Montparnasse","Boulevard Raspail","Boulevard Richard-Lenoir","Boulevard de Rochechouart","Boulevard Saint-Germain","Boulevard Saint-Michel","Boulevard de Sébastopol","Boulevard du Temple","Boulevard Voltaire","Boulevard de la Zone"];
+const deStreets = streets.filter(street => street.includes(' de '));
 
+console.log(deStreets);
 
 // 7. sort Exercise
 // Sort the people alphabetically by last name
+const stortedPeople = people.sort((a, b) => a.localeCompare(b));
+
+console.log('Sorted ppl -> ', stortedPeople);
 
 // 8. Reduce Exercise
 // Sum up the instances of each of these
 const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+const transport = data.reduce((obj, item) => {
+	
+	if (! obj[item]) {
+		obj[item] = 0;
+	};
+	
+	obj[item]++;
+	return obj;
+}, {});
+
+console.log(transport);
