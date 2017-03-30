@@ -41,8 +41,8 @@ class VideoPlayer {
         console.log('clicked backward');
     }
 
-    showVideoProgress(currentDuration) {       
-        let played = Math.round(currentDuration / this.videoDuration * 1000);
+    showVideoProgress() {       
+        let played = Math.round(this.videoElement.currentTime / this.videoDuration * 1000);
         
         this.progressFilledElement.style.width     = `${played}px`;
         this.progressFilledElement.style.flexBasis = `${played}px`;
@@ -71,9 +71,7 @@ class VideoPlayer {
         this.skipForwardElement.addEventListener('click', this.skipForward.bind(this));
         this.skipBackwardElement.addEventListener('click', this.skipBackward.bind(this));
         this.videoElement.addEventListener('loadedmetadata', this.setVideoDuration.bind(this));
-        this.videoElement.addEventListener('timeupdate', () => {
-            this.showVideoProgress(this.videoElement.currentTime);
-        });
+        this.videoElement.addEventListener('timeupdate', this.showVideoProgress.bind(this));
     }
 
     setVideoDuration() {
