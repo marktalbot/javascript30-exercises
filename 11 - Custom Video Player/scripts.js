@@ -1,16 +1,16 @@
-const player = document.querySelector('.player');
-
 class VideoPlayer {
     
     constructor(player) {
-        // @TODO: set default volume/rate levels and place slider in correct position
-        this.player = player;
+        this.player        = player;
+        this.videoDuration = null;
         this.bootstrap();
     }
 
     bootstrap() {
-        this.selectPlayerElements();
+        this.setPlayerElements();
         this.setEventListeners();
+        this.setPlayerDefaults();
+        this.setVideoDuration();
     }
 
     togglePlayback() {
@@ -33,25 +33,53 @@ class VideoPlayer {
         this.videoElement.playbackRate = event.srcElement.value;
     }
 
-    skipForward() {}
+    skipForward() {
+        console.log('clicked forward');
+    }
 
-    skipBackward() {}
+    skipBackward() {
+        console.log('clicked backward');
+    }
 
-    selectPlayerElements() {
-        this.videoElement        = this.player.querySelector('video');
-        this.playBtnElement      = this.player.querySelector('.player__button.toggle');
-        this.volumeSliderElement = this.player.querySelector('.player__slider[name="volume"]');
-        this.rateSliderElement   = this.player.querySelector('.player__slider[name="playbackRate"]');
-        this.skipForwardElement  = this.player.querySelector('.player__button[data-skip="25"]');
-        this.skipBackwardElement = this.player.querySelector('.player__button[data-skip="-10"]');
+    showVideoProgress(currentDuration) {       
+        let played = Math.round(currentDuration / this.videoDuration * 1000);
+        
+        this.progressFilledElement.style.width     = `${played}px`;
+        this.progressFilledElement.style.flexBasis = `${played}px`;
+    }
+
+    setPlayerDefaults() {
+        this.progressFilledElement.style.width     = `${1}px`;
+        this.progressFilledElement.style.flexBasis = `${1}px`;
+    }
+
+    setPlayerElements() {
+        this.videoElement          = this.player.querySelector('video');
+        this.playBtnElement        = this.player.querySelector('.player__button.toggle');
+        this.volumeSliderElement   = this.player.querySelector('.player__slider[name="volume"]');
+        this.rateSliderElement     = this.player.querySelector('.player__slider[name="playbackRate"]');
+        this.skipForwardElement    = this.player.querySelector('.player__button[data-skip="25"]');
+        this.skipBackwardElement   = this.player.querySelector('.player__button[data-skip="-10"]');
+        this.progressElement       = this.player.querySelector('.progress');
+        this.progressFilledElement = this.player.querySelector('.progress__filled');
     }
 
     setEventListeners() {
         this.playBtnElement.addEventListener('click', this.togglePlayback.bind(this));
         this.volumeSliderElement.addEventListener('change', this.volume.bind(this));
         this.rateSliderElement.addEventListener('change', this.playbackRate.bind(this));
-        // @TODO: Add event listeners for skip buttons
+        this.skipForwardElement.addEventListener('click', this.skipForward.bind(this));
+        this.skipBackwardElement.addEventListener('click', this.skipBackward.bind(this));
+        this.videoElement.addEventListener('loadedmetadata', this.setVideoDuration.bind(this));
+        this.videoElement.addEventListener('timeupdate', () => {
+            this.showVideoProgress(this.videoElement.currentTime);
+        });
+    }
+
+    setVideoDuration() {
+        this.videoDuration = this.videoElement.duration;
     }
 }
 
+const player      = document.querySelector('.player');
 const videoPlayer = new VideoPlayer(player);
